@@ -1,22 +1,34 @@
-const filters = [
-  { id: 'all', label: 'Todas' },
-  { id: 'pending', label: 'Pendientes' },
-  { id: 'done', label: 'Completadas' },
-] as const
+import type { Filter } from '../types/studyPlan';
 
-export function TaskFilters() {
+interface TaskFiltersProps {
+  currentFilter: Filter;
+  onSetFilter: (filter: Filter) => void;
+}
+
+export default function TaskFilters({ currentFilter, onSetFilter }: TaskFiltersProps) {
   return (
-    <div className="filters" role="group" aria-label="Filtrar tareas">
-      {filters.map((filter) => (
-        <button
-          key={filter.id}
-          type="button"
-          className={filter.id === 'all' ? 'filter is-active' : 'filter'}
-          data-filter={filter.id}
-        >
-          {filter.label}
-        </button>
-      ))}
+    <div className="filters">
+      <button
+        type="button"
+        className={currentFilter === 'all' ? 'filter is-active' : 'filter'}
+        onClick={() => onSetFilter('all')}
+      >
+        Todas
+      </button>
+      <button
+        type="button"
+        className={currentFilter === 'pending' ? 'filter is-active' : 'filter'}
+        onClick={() => onSetFilter('pending')}
+      >
+        Pendientes
+      </button>
+      <button
+        type="button"
+        className={currentFilter === 'completed' ? 'filter is-active' : 'filter'}
+        onClick={() => onSetFilter('completed')}
+      >
+        Completadas
+      </button>
     </div>
-  )
+  );
 }

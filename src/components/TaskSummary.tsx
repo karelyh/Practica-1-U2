@@ -1,18 +1,26 @@
-export function TaskSummary() {
+interface TaskSummaryProps {
+  summary: {
+    total: number;
+    pending: number;
+    completed: number;
+  };
+}
+
+export default function TaskSummary({ summary }: TaskSummaryProps) {
   return (
     <dl className="summary">
       <div>
         <dt>Total</dt>
-        <dd>—</dd>
+        <dd>{summary.total}</dd>
       </div>
       <div>
         <dt>Pendientes</dt>
-        <dd>—</dd>
+        <dd>{summary.pending}</dd>
       </div>
       <div>
         <dt>Completadas</dt>
-        <dd>—</dd>
+        <dd>{summary.completed}</dd>
       </div>
     </dl>
-  )
+  );
 }

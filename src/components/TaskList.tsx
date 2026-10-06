@@ -1,21 +1,27 @@
-import { TaskItem } from './TaskItem'
+import TaskItem from './TaskItem';
+import type { TaskItem as StudyTaskItem } from '../types/studyPlan';
 
-export function TaskList() {
+interface TaskListProps {
+  tasks: StudyTaskItem[];
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+}
+
+export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
+  if (tasks.length === 0) {
+    return <p className="empty-state">No hay tareas para este filtro.</p>;
+  }
+
   return (
-    <section className="task-panel" aria-label="Tareas">
-      <ul className="task-list">
-        {/* Layout samples. Replace them with the tasks from state. */}
+    <ul className="task-list">
+      {tasks.map((task) => (
         <TaskItem
-          title="Leer la guía de useReducer"
-          subject="programacion"
-          done={false}
+          key={task.id}
+          task={task}
+          onToggle={onToggle}
+          onDelete={onDelete}
         />
-        <TaskItem
-          title="Resolver ejercicios de fracciones"
-          subject="matematicas"
-          done
-        />
-      </ul>
-    </section>
-  )
+      ))}
+    </ul>
+  );
 }

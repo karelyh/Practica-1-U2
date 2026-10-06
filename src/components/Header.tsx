@@ -1,4 +1,4 @@
-export function Header() {
+export default function Header() {
   return (
     <header className="header">
       <p className="eyebrow">Práctica · React</p>
@@ -7,5 +7,5 @@ export function Header() {
         Organiza las tareas de la semana y marca lo que ya terminaste.
       </p>
     </header>
-  )
+  );
 }

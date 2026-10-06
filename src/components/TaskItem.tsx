@@ -1,28 +1,22 @@
-const subjects = {
-  programacion: 'Programación',
-  matematicas: 'Matemáticas',
-  historia: 'Historia',
-} as const
+import type { TaskItem as StudyTaskItem } from '../types/studyPlan';
 
-type SubjectId = keyof typeof subjects
-
-type TaskItemProps = {
-  title: string
-  subject: SubjectId
-  done: boolean
+interface TaskItemProps {
+  task: StudyTaskItem;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export function TaskItem({ title, subject, done }: TaskItemProps) {
+export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
-    <li className={done ? 'task is-done' : 'task'}>
+    <li className={task.done ? 'task is-done' : 'task'}>
       <label className="task-check">
-        <input type="checkbox" defaultChecked={done} />
-        <span>{title}</span>
+        <input type="checkbox" checked={task.done} onChange={() => onToggle(task.id)} />
+        <span>{task.title}</span>
       </label>
-      <span className={`badge badge-${subject}`}>{subjects[subject]}</span>
-      <button type="button" className="delete-button">
+      <span className={`badge badge-${task.subject}`}>{task.subject}</span>
+      <button type="button" className="delete-button" onClick={() => onDelete(task.id)}>
         Eliminar
       </button>
     </li>
-  )
+  );
 }
